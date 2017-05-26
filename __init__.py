@@ -26,10 +26,12 @@ SOFTWARE.
 
 from PyQt5 import QtWidgets, QtGui, QtCore
 from PyQt5.QtCore import Qt
+from binaryninja import PluginCommand
 from widgets import BinjaButtonHolderWidget
 from functools import partial
 
 toolbar = BinjaButtonHolderWidget()
+buttons = []
 
 def get_binary_view():
     print(locals().keys())
@@ -56,4 +58,7 @@ def add_image_button(filename, size, fun=None, tooltip=None):
     button.setIconSize(QtCore.QSize(size[0], size[1]))
     toolbar.add_widget(button)
 
-toolbar.show()
+def commit_buttons(binary_view):
+    toolbar.toggle()
+
+PluginCommand.register("Toggle Toolbar", "", commit_buttons)
