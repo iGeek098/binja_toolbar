@@ -48,6 +48,9 @@ class BinjaButtonHolderWidget(QtWidgets.QDockWidget):
     def addToolMenuAction(self, name, function):
         self._tool_menu.addAction(name, function)
 
+    def clear_all_widgets(self):
+        self._toolbar.clear()
+
     def toggle(self):
         if self.isVisible():
             self.hide()

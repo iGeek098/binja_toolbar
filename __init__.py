@@ -26,22 +26,34 @@ SOFTWARE.
 
 from PyQt5 import QtWidgets, QtGui, QtCore
 from PyQt5.QtCore import Qt
-from binaryninja import BinaryView as bv
 from widgets import BinjaButtonHolderWidget
 from functools import partial
 
 toolbar = BinjaButtonHolderWidget()
 
-def add_text_button(name, fun=None):
+def get_binary_view():
+    print(locals().keys())
+    try:
+        return bv
+    except NameError:
+        print("BV has not yet been defined")
+
+def add_text_button(name, fun=None, tooltip=None):
     button = QtWidgets.QPushButton(name, toolbar)
     if fun is not None:
-        button.clicked.connect(partial(fun, bv))
+        button.clicked.connect(partial(fun, get_binary_view()))
+    if tooltip is not None:
+        button.setToolTip(tooltip)
     toolbar.add_widget(button)
 
-from binaryninja import log
-def show_toolbar_message(_view):
-    log.log(4, "You haven't created any toolbar buttons yet!")
-
-add_text_button("Demo", show_toolbar_message)
+def add_image_button(filename, size, fun=None, tooltip=None):
+    button = QtWidgets.QPushButton('', toolbar)
+    button.setIcon(QtGui.QIcon(filename))
+    if fun is not None:
+        button.clicked.connect(partial(fun, get_binary_view()))
+    if tooltip is not None:
+        button.setToolTip(tooltip)
+    button.setIconSize(QtCore.QSize(size[0], size[1]))
+    toolbar.add_widget(button)
 
 toolbar.show()
