@@ -27,30 +27,32 @@ SOFTWARE.
 from PyQt5 import QtWidgets
 from PyQt5.QtCore import Qt
 
-class BinjaDockWidget(QtWidgets.QDockWidget):
+class BinjaButtonHolderWidget(QtWidgets.QDockWidget):
     """Binja Dockable Widget
         A widget that uses PyQt5 to locate Binja window instances and inject them as parents to allow docking
     """
     def __init__(self, *__args):
-        super(BinjaDockWidget, self).__init__(*__args)
+        super(BinjaButtonHolderWidget, self).__init__(*__args)
         self._app = QtWidgets.QApplication.instance()
         self._main_window = [x for x in self._app.allWidgets() if x.__class__ is QtWidgets.QMainWindow][0]
         self._tool_menu = [x for x in self._main_window.menuWidget().children() if x.__class__ is QtWidgets.QMenu and x.title() == u'&Tools'][0]
         self._main_window.addDockWidget(Qt.TopDockWidgetArea, self)
-        self._tabs = QtWidgets.QTabWidget()
-        self._tabs.setTabPosition(QtWidgets.QTabWidget.East)
-        self.setWidget(self._tabs)
-        self.addToolMenuAction('Toggle plugin dock', self.toggle)
+        self._toolbar = QtWidgets.QToolBar()
+        self.setWidget(self._toolbar)
+        self.addToolMenuAction('Toggle toolbar', self.toggle)
         self.hide()
 
-    def addTabWidget(self, widget, name):
-        self._tabs.addTab(widget, name)
+    def add_widget(self, widj):
+        self._toolbar.addWidget(widj)
 
     def addToolMenuAction(self, name, function):
         self._tool_menu.addAction(name, function)
 
     def toggle(self):
-        self.hide() if self.isVisible() else self.show()
+        if self.isVisible():
+            self.hide()
+        else:
+            self.show()
 
     @property
     def app(self):
@@ -59,26 +61,3 @@ class BinjaDockWidget(QtWidgets.QDockWidget):
     @property
     def main_window(self):
         return self._main_window
-
-    @property
-    def tabs(self):
-        return self._tabs
-
-    def selectTab(self, widget):
-        self._tabs.setCurrentIndex(self._tabs.indexOf(widget))
-
-class BinjaWidget(QtWidgets.QWidget):
-    """Binja tabbed widget
-        This widget injects the core instance and adds itself to a new tab on the BinjaDockWidget
-    """
-    def __init__(self, tabName):
-        """
-        :param tabName: Name of the tab
-        """
-        from abstract import instance
-        super(BinjaWidget, self).__init__()
-        self._core = instance()
-        self._core.addTabWidget(self, tabName)
-
-    def addToolMenuAction(self, name, function):
-        self._core.addToolMenuAction(name, function)

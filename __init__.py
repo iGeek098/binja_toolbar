@@ -26,27 +26,22 @@ SOFTWARE.
 
 from PyQt5 import QtWidgets, QtGui, QtCore
 from PyQt5.QtCore import Qt
-from binaryninja import *
-from widgets import BinjaWidget
+from binaryninja import BinaryView as bv
+from widgets import BinjaButtonHolderWidget
+from functools import partial
 
+toolbar = BinjaButtonHolderWidget()
 
-class ToolbarWidget(BinjaWidget):
-    """Sample Plugin. Displays some text.
-    """
-    def __init__(self, name):
+def add_text_button(name, fun=None):
+    button = QtWidgets.QPushButton(name, toolbar)
+    if fun is not None:
+        button.clicked.connect(partial(fun, bv))
+    toolbar.add_widget(button)
 
-        super(ToolbarWidget, self).__init__(name)
-        self._button = QtWidgets.QPushButton('Demo', self)
-        self.setLayout(QtWidgets.QHBoxLayout())
-        self.layout().addWidget(self._button)
-        self.setObjectName('BNPlugin_Toolbar')
+from binaryninja import log
+def show_toolbar_message(_view):
+    log.log(4, "You haven't created any toolbar buttons yet!")
 
-    @QtCore.pyqtSlot(list)
-    def display(self, _):
-        self._core.show()
-        self._core.selectTab(self)
-        self.show()
+add_text_button("Demo", show_toolbar_message)
 
-print("Initializing toolbar")
-d = ToolbarWidget('Toolbar')
-d.display(None)
+toolbar.show()
