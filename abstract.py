@@ -3,7 +3,7 @@ Defunct <defunct<at>defunct.io> - NOP Developments LLC. 2016
 
 MIT License
 
-Copyright (c) <2016> <NOP Developments LLC>                                                                                         
+Copyright (c) <2016> <NOP Developments LLC>
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -29,12 +29,14 @@ from widgets import BinjaDockWidget
 
 
 def instance():
+    print("Building QApplication")
     app = QtWidgets.QApplication.instance()
+    print("Finding main window")
     main_window = [x for x in app.allWidgets() if x.__class__ is QtWidgets.QMainWindow][0]
+    print("Creating Dock")
     try:
         dock = [x for x in main_window.children() if x.__class__ is BinjaDockWidget][0]
     except:
         dock = BinjaDockWidget()
-
+    print("Found Dock")
     return dock
-

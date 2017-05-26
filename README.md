@@ -1,21 +1,13 @@
 
-# BinjaDock 
-![screenshot](https://defunctio.github.io/screenshot.png)
+# binja-toolbar
 
-BinjaDock allows you to create dockable widgets in Binja and exposes a main dockwidget with tabs for plugins to embed to.
-
-Yarascan is an example plugin demonstrating how to use BinjaDock.
+binja-toolbar is a fork of BinjaDock that adds a toolbar to Binary Ninja and allows you to easily add buttons to it. You probably won't have a reason to use this as it is, but other plugin developers may find it makes it easy for them to effectively incorporate their code into the UI.
 
 ## Installation
-Put it in the plugins folder...
-
-## Yarascan 
-To use the included yara example plugin you will need to supply your own yara signatures and define them in SIG_FILE in [yarascan.py](https://github.com/NOPDev/BinjaDock/blob/c946abf4202fb070700bef5f49050c879fb95e73/yarascan.py#L38). 
-You may find the crypto signatures and many more (AntiVM, malware, packers, exploit kits) [here](https://github.com/Yara-Rules/rules). 
+Inside your [Binary Ninja plugins folder](https://github.com/Vector35/binaryninja-api/tree/master/python/examples#loading-plugins), just run `git clone https://github.com/ehennenfent/binja-toolbar.git`
 
 ## Requirements
 * PyQt5
-* yara
-* binaryninja...
+* Binary Ninja
 
-BinjaDock has only been tested on Ubuntu 16.04 using Qt and PyQt5 packages from the official ubuntu repositories.
+binja-toolbar has only been tested on OSX. You are encouraged to file a pull request or open an issue for any incompatibilities.

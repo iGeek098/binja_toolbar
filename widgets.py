@@ -36,7 +36,7 @@ class BinjaDockWidget(QtWidgets.QDockWidget):
         self._app = QtWidgets.QApplication.instance()
         self._main_window = [x for x in self._app.allWidgets() if x.__class__ is QtWidgets.QMainWindow][0]
         self._tool_menu = [x for x in self._main_window.menuWidget().children() if x.__class__ is QtWidgets.QMenu and x.title() == u'&Tools'][0]
-        self._main_window.addDockWidget(Qt.RightDockWidgetArea, self)
+        self._main_window.addDockWidget(Qt.TopDockWidgetArea, self)
         self._tabs = QtWidgets.QTabWidget()
         self._tabs.setTabPosition(QtWidgets.QTabWidget.East)
         self.setWidget(self._tabs)
@@ -75,7 +75,7 @@ class BinjaWidget(QtWidgets.QWidget):
         """
         :param tabName: Name of the tab
         """
-        from . import instance
+        from abstract import instance
         super(BinjaWidget, self).__init__()
         self._core = instance()
         self._core.addTabWidget(self, tabName)
