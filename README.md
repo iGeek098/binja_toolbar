@@ -1,13 +1,13 @@
 
 # binja_toolbar
 
-binja_toolbar is a fork of BinjaDock that adds a toolbar to Binary Ninja and allows you to easily add buttons to it. You probably won't have a reason to use this as it is, but other plugin developers may find it makes it easy for them to effectively incorporate their code into the UI.
+binja_toolbar is a fork of BinjaDock that adds a toolbar to Binary Ninja and allows you to easily add buttons to it. This probably won't be useful on its own, but plugin developers may find it makes it easy for them to effectively incorporate their code into the UI.
 
 ## Installation
 Inside your [Binary Ninja plugins folder](https://github.com/Vector35/binaryninja-api/tree/master/python/examples#loading-plugins), just run `git clone https://github.com/ehennenfent/binja_toolbar.git`
 
 ## Sample Usage
-The following script adds some demo buttons to the toolbar. This can be placed in the `__init__.py` file of its own plugin.
+The following script adds some demo buttons to the toolbar. This can be placed in the `__init__.py` file of its own plugin. In your own plugins, you can simply import the `add_image_button` and `add_text_button` functions from `binja_toolbar`.
 ```
 ~/
   .binaryninja/
@@ -37,6 +37,20 @@ add_image_button('.binaryninja/plugins/toolbar_tester/fidget_spinner.png', (24,2
 ```
 
 Note that plugins are initialized inside of `~`, so it is necessary to specify the entire file path for images.
+
+## API
+```
+add_text_button(name, function, tooltip)
+  name: Text to display on the button
+  function: function pointer to the callback to be executed each time the button is pushed. The current binary view is passed as an argument to this function
+  tooltip: optional tooltip to display
+
+add_image_button(filename, size, function, tooltip)
+  filename: full path (from ~) to the image to display
+  size: a tuple containing the desired rendered size of the icon
+  function: function pointer to the callback to be executed each time the button is pushed. The current binary view is passed as an argument to this function
+  tooltip: optional tooltip to display
+```
 
 ## Current Limitations
 There's currently (to my knowledge) no good way to track when the user switches between open binary views, so this plugin works best when used with only a single binary open. One can make it work by reinitializing the toolbar every time one switches between binaries, but that's less than ideal. This may not be fixed until the upcoming UI API features in version 1.2.
