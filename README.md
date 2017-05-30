@@ -6,7 +6,10 @@ binja_toolbar is a fork of BinjaDock that adds a toolbar to Binary Ninja and all
 ## Installation
 Inside your [Binary Ninja plugins folder](https://github.com/Vector35/binaryninja-api/tree/master/python/examples#loading-plugins), just run `git clone https://github.com/ehennenfent/binja_toolbar.git`
 
-## Sample Usage
+## Usage
+After loading a binary, just click the `Initialize toolbar for this view` item in the tools menu.
+
+## Sample Utilization
 The following script adds some demo buttons to the toolbar. This can be placed in the `__init__.py` file of its own plugin. In your own plugins, you can simply import the `add_image_button` and `add_text_button` functions from `binja_toolbar`.
 ```
 ~/
