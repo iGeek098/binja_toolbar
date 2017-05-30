@@ -9,10 +9,10 @@ Inside your [Binary Ninja plugins folder](https://github.com/Vector35/binaryninj
 ## Sample Usage
 The following script adds some demo buttons to the toolbar. This can be placed in the `__init__.py` file of its own plugin.
 ```
-~/:
-  .binaryninja/:
-    plugins/:
-      toolbar_tester/:
+~/
+  .binaryninja/
+    plugins/
+      toolbar_tester/
         __init__.py
         fidget_spinner.png
       binja_toolbar/
