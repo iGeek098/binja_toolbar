@@ -20,8 +20,6 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
-
-
 """
 
 from PyQt5 import QtWidgets, QtGui, QtCore
@@ -31,19 +29,18 @@ from widgets import BinjaButtonHolderWidget
 from functools import partial
 
 toolbar = BinjaButtonHolderWidget()
-buttons = []
+global_binary_view = None
 
 def get_binary_view():
-    print(locals().keys())
-    try:
-        return bv
-    except NameError:
-        print("BV has not yet been defined")
+    global global_binary_view
+    if global_binary_view is not None:
+        return global_binary_view
+    print("Binary View has not been initialized")
 
 def add_text_button(name, fun=None, tooltip=None):
     button = QtWidgets.QPushButton(name, toolbar)
     if fun is not None:
-        button.clicked.connect(partial(fun, get_binary_view()))
+        button.clicked.connect(lambda: fun(get_binary_view()))
     if tooltip is not None:
         button.setToolTip(tooltip)
     toolbar.add_widget(button)
@@ -52,13 +49,16 @@ def add_image_button(filename, size, fun=None, tooltip=None):
     button = QtWidgets.QPushButton('', toolbar)
     button.setIcon(QtGui.QIcon(filename))
     if fun is not None:
-        button.clicked.connect(partial(fun, get_binary_view()))
+        button.clicked.connect(lambda: fun(get_binary_view()))
     if tooltip is not None:
         button.setToolTip(tooltip)
     button.setIconSize(QtCore.QSize(size[0], size[1]))
     toolbar.add_widget(button)
 
-def commit_buttons(binary_view):
-    toolbar.toggle()
+def set_bv(binary_view):
+    global global_binary_view
+    global_binary_view = binary_view
+    if not toolbar.isVisible():
+        toolbar.toggle()
 
-PluginCommand.register("Toggle Toolbar", "", commit_buttons)
+PluginCommand.register("Initialize Toolbar for this view", "", set_bv)
