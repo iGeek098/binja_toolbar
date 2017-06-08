@@ -55,6 +55,13 @@ def add_image_button(filename, size, fun=None, tooltip=None):
     button.setIconSize(QtCore.QSize(size[0], size[1]))
     toolbar.add_widget(button)
 
+def add_picker(pickeritems, callback):
+    picker = QtWidgets.QComboBox()
+    for item in pickeritems:
+        picker.addItem(item)
+    picker.currentIndexChanged.connect(callback)
+    toolbar.add_widget(picker)
+
 def set_bv(binary_view):
     global global_binary_view
     global_binary_view = binary_view
