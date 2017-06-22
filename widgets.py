@@ -28,8 +28,8 @@ from PyQt5 import QtWidgets
 from PyQt5.QtCore import Qt
 
 class BinjaButtonHolderWidget(QtWidgets.QDockWidget):
-    """Binja Dockable Widget
-        A widget that uses PyQt5 to locate Binja window instances and inject them as parents to allow docking
+    """Binja Button Holder Widget:
+        A dockable toolbar widget that can hold text buttons, image buttons, and combo boxes
     """
     def __init__(self, *__args):
         super(BinjaButtonHolderWidget, self).__init__(*__args)
@@ -45,12 +45,14 @@ class BinjaButtonHolderWidget(QtWidgets.QDockWidget):
         self._toolbar.addWidget(widj)
 
     def addToolMenuAction(self, name, function):
+        """ Adds an item to the tool menu (at the top of the window) without registering a plugin command """
         self._tool_menu.addAction(name, function)
 
     def clear_all_widgets(self):
         self._toolbar.clear()
 
     def toggle(self):
+        """ Toggles visibility (obviously) """
         if self.isVisible():
             self.hide()
         else:

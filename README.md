@@ -1,7 +1,7 @@
 
 # binja_toolbar
 
-binja_toolbar is a fork of BinjaDock that adds a toolbar to Binary Ninja and allows you to easily add buttons to it. This probably won't be useful on its own, but plugin developers may find it makes it easy for them to effectively incorporate their code into the UI.
+binja_toolbar is a fork of [BinjaDock](https://github.com/NOPDev/BinjaDock) that adds a toolbar to Binary Ninja and allows you to easily add buttons to it. This probably won't be useful on its own, but plugin developers may find it makes it easy for them to effectively incorporate their code into the UI.
 
 ## Installation
 Inside your [Binary Ninja plugins folder](https://github.com/Vector35/binaryninja-api/tree/master/python/examples#loading-plugins), just run `git clone https://github.com/ehennenfent/binja_toolbar.git`
@@ -49,10 +49,14 @@ add_text_button(name, function, tooltip)
   tooltip: optional tooltip to display
 
 add_image_button(filename, size, function, tooltip)
-  filename: full path (from ~) to the image to display
+  filename: full path to the image to display
   size: a tuple containing the desired rendered size of the icon
   function: function pointer to the callback to be executed each time the button is pushed. The current binary view is passed as an argument to this function
   tooltip: optional tooltip to display
+
+add_picker(items, callback)
+  items: a list of strings to be displayed in the combobox
+  callback: a function to be executed when the item in the combobox is changed. Gets passed the index of the new item.
 ```
 
 ## Current Limitations

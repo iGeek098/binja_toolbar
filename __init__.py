@@ -32,12 +32,14 @@ toolbar = BinjaButtonHolderWidget()
 global_binary_view = None
 
 def get_binary_view():
+    """ Internal function that gets the best guess at the current binary view """
     global global_binary_view
     if global_binary_view is not None:
         return global_binary_view
     print("Binary View has not been initialized")
 
 def add_text_button(name, fun=None, tooltip=None):
+    """ Adds a pushbutton with a text label to the toolbar """
     button = QtWidgets.QPushButton(name, toolbar)
     if fun is not None:
         button.clicked.connect(lambda: fun(get_binary_view()))
@@ -46,6 +48,7 @@ def add_text_button(name, fun=None, tooltip=None):
     toolbar.add_widget(button)
 
 def add_image_button(filename, size, fun=None, tooltip=None):
+    """ Adds a pushbutton with an icon to the toolbar  """
     button = QtWidgets.QPushButton('', toolbar)
     button.setIcon(QtGui.QIcon(filename))
     if fun is not None:
@@ -56,6 +59,7 @@ def add_image_button(filename, size, fun=None, tooltip=None):
     toolbar.add_widget(button)
 
 def add_picker(pickeritems, callback):
+    """ Adds a combobox widget to the toolbar """
     picker = QtWidgets.QComboBox()
     for item in pickeritems:
         picker.addItem(item)
@@ -63,6 +67,7 @@ def add_picker(pickeritems, callback):
     toolbar.add_widget(picker)
 
 def set_bv(binary_view):
+    """ Caches the binary view so that button callbacks can have access to it """
     global global_binary_view
     global_binary_view = binary_view
     if not toolbar.isVisible():
