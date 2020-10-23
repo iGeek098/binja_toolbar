@@ -26,6 +26,7 @@ SOFTWARE.
 
 from PyQt5 import QtWidgets
 from PyQt5.QtCore import Qt
+from binaryninjaui import UIAction, UIActionHandler, Menu
 
 class BinjaButtonHolderWidget(QtWidgets.QDockWidget):
     """Binja Button Holder Widget:
@@ -35,7 +36,7 @@ class BinjaButtonHolderWidget(QtWidgets.QDockWidget):
         super(BinjaButtonHolderWidget, self).__init__(*__args)
         self._app = QtWidgets.QApplication.instance()
         self._main_window = [x for x in self._app.allWidgets() if x.__class__ is QtWidgets.QMainWindow][0]
-        self._tool_menu = [x for x in self._main_window.menuWidget().children() if x.__class__ is QtWidgets.QMenu and x.title() == u'&Tools'][0]
+        self._tool_menu = Menu.mainMenu('Tools')
         self._main_window.addDockWidget(Qt.TopDockWidgetArea, self)
         self._toolbar = QtWidgets.QToolBar()
         self.setWidget(self._toolbar)
@@ -46,6 +47,8 @@ class BinjaButtonHolderWidget(QtWidgets.QDockWidget):
 
     def addToolMenuAction(self, name, function):
         """ Adds an item to the tool menu (at the top of the window) without registering a plugin command """
+        UIAction.registerAction(name)
+        UIActionHandler.globalActions().bindAction(name, UIAction(function))
         self._tool_menu.addAction(name, function)
 
     def clear_all_widgets(self):
