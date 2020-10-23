@@ -24,8 +24,15 @@ SOFTWARE.
 
 from PyQt5 import QtWidgets, QtGui, QtCore
 from PyQt5.QtCore import Qt
-from binaryninja import PluginCommand
-from widgets import BinjaButtonHolderWidget
+from binaryninja import PluginCommand, log, user_plugin_path
+
+import sys
+try:
+    from widgets import BinjaButtonHolderWidget
+except ImportError:
+    binaryninja_local_path = user_plugin_path()
+    sys.path.append(binaryninja_local_path + '/binja_toolbar/')
+    from widgets import BinjaButtonHolderWidget
 from functools import partial
 
 toolbar = BinjaButtonHolderWidget()
